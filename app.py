@@ -23,12 +23,28 @@ st.write(
     "The assistant will analyse the problem and suggest troubleshooting steps."
 )
 
+if "issue" not in st.session_state:
+    st.session_state["issue"] = ""
+
 issue = st.text_area(
     "Customer issue",
-    placeholder="Example: Users are receiving a 401 error when trying to access our API..."
+    placeholder="Example: Users are receiving a 401 error when trying to access our API...",
+    key="issue"
 )
 
-if st.button("Analyse Issue"):
+col1, col2 = st.columns([1, 5])
+
+with col1:
+    analyse = st.button("Analyse Issue")
+
+with col2:
+    clear = st.button("Clear")
+
+if clear:
+    st.session_state["issue"] = ""
+    st.rerun()
+
+if analyse:
 
     if not issue.strip():
         st.warning("Please enter a technical issue.")
